@@ -1,0 +1,29 @@
+# Environment variables and secrets
+.env
+.env.*
+*.env
+backend/.env
+
+# Node & Frontend
+node_modules/
+dist/
+dist-ssr/
+*.local
+
+# Python
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.pytest_cache/
+
+# Uploads & Temporary files
+temp_uploads/
+backend/temp_uploads/
+uploads/
+backend/uploads/
+
+# ML model files
+yolo*.pt

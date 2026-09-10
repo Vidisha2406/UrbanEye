@@ -1,0 +1,42 @@
+services:
+  # ---------------------------------------------------------------------------
+  # UrbanEye FastAPI Backend Web Service
+  # ---------------------------------------------------------------------------
+  - type: web
+    name: urbaneye-backend
+    runtime: python
+    buildCommand: pip install -r backend/requirements.txt
+    startCommand: uvicorn backend.app.main:app --host 0.0.0.0 --port $PORT
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.11.9
+      - key: ROBOFLOW_API_KEY
+        sync: false
+      - key: ROBOFLOW_MODEL_ID
+        value: potholes-1bo4b/1
+      - key: ROBOFLOW_INFRASTRUCTURE_MODEL_ID
+        value: faded-or-damaged-signs-detection-u7arv/1
+      - key: YOLO_MODEL_PATH
+        value: backend/models/yolo11n.pt
+      - key: ALLOWED_ORIGINS
+        sync: false
+      - key: PORT
+        value: 10000
+
+  # ---------------------------------------------------------------------------
+  # UrbanEye Vite React Frontend Static Site
+  # ---------------------------------------------------------------------------
+  - type: web
+    name: urbaneye-frontend
+    runtime: static
+    buildCommand: npm install && npm run build
+    staticPublishPath: ./dist
+    routes:
+      - type: rewrite
+        source: /*
+        destination: /index.html
+    envVars:
+      - key: VITE_API_URL
+        sync: false
+      - key: VITE_CARTO_API_KEY
+        sync: false
